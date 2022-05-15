@@ -1,0 +1,25 @@
+<div id="main">
+  <h2>Chat room</h2>
+  <div id="chat_body">
+    <div id="messages">
+      <%= link_to 'logout', destroy_user_session_path, style: "text-align: center;", data: { "turbo-method": :delete }%>
+      <% Message.all.find_each do |message| %>
+        <% class_name = current_user.email == message.user.email ? "sent" : "received" %>
+          <p class= <%= class_name %> > <span style='color: black;'> <%= message.user.full_name + ': ' %> </span> <%= message.content %> </p>
+      <% end %>
+    </div>
+    <form id="send_message">
+      <input type="text" id="message" name="message">
+      <button>Send</button>
+    </form>
+  </div>
+  <div id="modal">
+    <div>
+      <form id="set_name">
+        <h4> Live Conversation </h4>
+        <input type="hidden" id="add_name" name="add_name" value=<%= current_user.full_name %> disabled=true >
+        <button>Join Conversation</button>
+      </form>
+    </div>
+  </div>
+</div>
